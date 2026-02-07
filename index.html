@@ -54,10 +54,10 @@
         }
 
         .month {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: bold;
             color: #333;
-            margin-bottom: 5px;
+            /* margin-bottom: 2px; */
         }
 
         .day-name {
@@ -214,14 +214,23 @@
 <body>
     <div class="nateega-container">
         <div class="header">
-            <div class="day-number" id="dayNumber"></div>
             <div class="month-year">
+                <div class="day-number" id="dayNumber"></div>
                 <div class="month" id="monthName"></div>
-                <div class="day-name" id="dayName"></div>
-                <div class="year" id="yearNumber"></div>
-                <div class="hijri-date" id="hijriDate"></div>
             </div>
-            <div class="day-number" id="dayNumber2"></div>
+
+            <div class="month-year">
+                <!-- <div class="month" id="monthName"></div> -->
+                <div class="month" id="dayName"></div>
+                <div class="year" id="yearNumber"></div>
+                <div class="year" id="hijriYearNumber"></div>
+                <!-- <div class="hijri-date" id="hijriDate"></div> -->
+            </div>
+
+            <div class="month-year">
+                <div class="day-number" id="hijriDayNumber"></div>
+                <div class="month" id="hijriMonthName"></div>
+            </div>
         </div>
 
         <div class="time-display" dir="ltr" id="timeDisplay">00:00:00</div>
@@ -304,10 +313,10 @@
             const dayOfWeek = now.getDay();
 
             document.getElementById('dayNumber').textContent = day;
-            document.getElementById('dayNumber2').textContent = day;
+            // document.getElementById('dayNumber2').textContent = day;
             document.getElementById('monthName').textContent = arabicMonths[month];
             document.getElementById('dayName').textContent = arabicDays[dayOfWeek];
-            document.getElementById('yearNumber').textContent = year;
+            document.getElementById('yearNumber').textContent = `${year} م`;
 
             let hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -336,8 +345,12 @@
 
                 if (data.code === 200 && data.data.hijri) {
                     const hijri = data.data.hijri;
-                    hijriDateText = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ`;
-                    document.getElementById('hijriDate').textContent = hijriDateText;
+                    document.getElementById('hijriDayNumber').textContent = hijri.day;
+                    document.getElementById('hijriMonthName').textContent = hijri.month.ar;
+                    document.getElementById('hijriYearNumber').textContent = `${hijri.year} هـ`;
+
+                    // hijriDateText = `${hijri.day} ${hijri.month.ar} ${hijri.year} هـ`;
+                    // document.getElementById('hijriDate').textContent = hijriDateText;
                 }
             } catch (error) {
                 console.error('خطأ في تحميل التاريخ الهجري:', error);
